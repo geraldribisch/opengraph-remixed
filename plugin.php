@@ -1,6 +1,6 @@
 <?php
 
-class pluginOpenGraph extends Plugin {
+class pluginOpenGraphRemixed extends Plugin {
 
 	public function init()
 	{
