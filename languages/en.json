@@ -1,8 +1,8 @@
 {
 	"plugin-data":
 	{
-		"name": "Open Graph",
-		"description": "The Open Graph protocol enables any web page to become a rich object in a social graph."
+		"name": "Open Graph Remixed 🚀",
+		"description": "Extention of the core plugin 'opengraph' with additional tags and support for categories."
 	},
 	"set-a-default-image-for-content": "Set a default image for the content without pictures.",
 	"set-your-facebook-app-id": "Set your Facebook App ID."
