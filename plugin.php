@@ -7,7 +7,8 @@ class pluginOpenGraphRemixed extends Plugin {
 		// Fields and default values for the database of this plugin
 		$this->dbFields = array(
 			'defaultImage'=>'',
-			'fbAppId'=>''
+			'fbAppId'=>'',
+            'tagDescription'=>''
 		);
 	}
 
@@ -30,6 +31,12 @@ class pluginOpenGraphRemixed extends Plugin {
 		$html .= '<input name="fbAppId" type="text" value="'.$this->getValue('fbAppId').'" placeholder="App ID">';
 		$html .= '<span class="tip">'.$L->g('set-your-facebook-app-id').'</span>';
 		$html .= '</div>';
+        
+        $html .= '<div>';
+		$html .= '<label>'.$L->get('Default description for tags').'</label>';
+		$html .= '<input name="tagDescription" type="text" value="'.$this->getValue('tagDescription').'" placeholder="Description">';
+		$html .= '<span class="tip">'.$L->g('set-a-default-description-for-tags').'</span>';
+		$html .= '</div>';
 
 		return $html;
 	}
@@ -51,7 +58,7 @@ class pluginOpenGraphRemixed extends Plugin {
 			'image'		    =>'',
 			'siteName'	    =>$site->title()
 		);
-
+        
 		switch ($WHERE_AM_I) {
 			// The user filter by page
 			case 'page':
@@ -79,6 +86,31 @@ class pluginOpenGraphRemixed extends Plugin {
 				$og['title']		= $category->name();
 				$og['description']	= $category->description();
 				$og['url']		    = $category->permalink($absolute=true);
+                
+                $pageContent = '';
+				if (Text::isNotEmpty($this->getValue('defaultImage'))) {
+					$og['image'] = $this->getValue('defaultImage');
+				}
+				elseif (isset($content[0]) ) {
+					$og['image'] 	= $content[0]->coverImage($absolute=true);
+					$pageContent 	= $content[0]->content();
+				}
+				break;
+                
+			// The user filter by category
+			case 'tag':
+                // Get the category key from the URL
+                $tagKey = $url->slug();
+
+                // Create the Category-Object
+                $tag = new Tag($tagKey); 
+                
+                $tagDescription = $this->getValue('tagDescription');
+                
+				$og['title']		= $tag->name();
+                if($this->getValue('tagDescription'))
+				    $og['description']	= str_replace("{{tag}}", $tag->name(), $tagDescription);
+				$og['url']		    = $tag->permalink($absolute=true);
                 
                 $pageContent = '';
 				if (Text::isNotEmpty($this->getValue('defaultImage'))) {
