@@ -1,0 +1,10 @@
+{
+	"author": "Gerald Ribisch",
+	"email": "",
+	"website": "https://github.com/geraldribisch/opengraph-remixed",
+	"version": "3.13.1",
+	"releaseDate": "2021-04-26",
+	"license": "MIT",
+	"compatible": "3.13.1",
+	"notes": "based on the bludit core plugin 'opengraph'"
+}
